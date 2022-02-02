@@ -12,10 +12,10 @@ const swaggerDefinition = {
       url: "http://localhost:8080",
       description: "Development server",
     },
-    // {
-    //   url: "https://woc4-darshan-modi.herokuapp.com",
-    //   description: "Testing Server",
-    // },
+    {
+      url: "https://se-backend-gid-8-2022.herokuapp.com",
+      description: "Testing Server",
+    },
   ],
   tags: [
     {
