@@ -1,4 +1,7 @@
+const db = {};
 
-const Rides = require("./rides.model")
+db.Rides = require("./rides.model");
+db.User = require("./user.model");
+db.OfferRides = require("./offerRides.model");
 
-module.exports = {Rides};
+module.exports = db;

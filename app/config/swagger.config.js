@@ -1,4 +1,5 @@
-const swaggerJSDoc = require("swagger-jsdoc");
+const schemas = require("../../docs/schema/index");
+const paths = require("../../docs/path/index");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -32,29 +33,17 @@ const swaggerDefinition = {
       cookieAuth: {
         type: "apiKey",
         in: "cookie",
-        name: "jwt",
+        name: "token",
       },
-      // JWT: {
-      //   type: "http",
-      //   scheme: "bearer",
-      //   bearerFormat: "JWT",
-      //   name: "Authentication",
-      //   in: "header",
-      // },
+    },
+    schemas: {
+      ...schemas,
     },
   },
-  //  if security required globally
-  // security: [
-  //   {
-  //     bearerAuth: [],
-  //   },
-  // ],
-};
-
-const options = {
-  swaggerDefinition,
-  // Paths to files(relative to root directory) containing OpenAPI definitions
+  paths: {
+    ...paths,
+  },
   apis: ["./app/routes/*.js"],
 };
 
-module.exports = options;
+module.exports = swaggerDefinition;
