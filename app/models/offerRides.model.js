@@ -1,4 +1,4 @@
-//DB_URL=mongodb+srv://Darshan:Darshan1310@cluster0.94usl.gcp.mongodb.net/SE-BACKEND
+
 
 const mongo = require('mongoose');
 const offer_rides = new mongo.Schema({
