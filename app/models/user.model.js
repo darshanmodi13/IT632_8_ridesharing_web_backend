@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  first_name: {
+  name: {
     type: String,
-    required: true,
-  },
-  last_name: {
-    type: String,
-    required: true,
+    require: true,
   },
   mobile_no: {
     type: Number,
@@ -27,17 +23,13 @@ const userSchema = new mongoose.Schema({
   },
   is_verified: {
     type: Boolean,
-    required: true,
     default: false,
   },
-  is_otp_sent: {
-    type: Boolean,
-    required: true,
-    default: false,
+  token: {
+    type: String,
   },
   role_id: {
     type: Number,
-    required: true,
   },
   current_location: {
     type: {
@@ -48,11 +40,10 @@ const userSchema = new mongoose.Schema({
         type: String,
       },
     },
-    required: true,
   },
   created_at: {
     type: Date,
-    required: true,
+    default: new Date().now,
   },
 });
 

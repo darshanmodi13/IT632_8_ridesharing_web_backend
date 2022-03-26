@@ -10,9 +10,21 @@ const document_schema = new mongoose.Schema({
     type: String,
     required: true,
   },
- is_document_verified:{
+  is_document_verified: {
     type: Boolean,
-    required:true,
+    required: true,
+  },
+  licence_number: {
+    type: String,
+    required: true,
+  },
+  vehicle: {
+    type: String,
+    require: true,
+  },
+  vehicle_no: {
+    type: String,
+    require: true,
   },
 });
 
