@@ -7,6 +7,7 @@ module.exports = (user) => {
       password: joi.string().required(),
       email: joi.string().email().required(),
       mobile_no: joi.number().required(),
+      gender: joi.string().required(),
     })
     .options({ abortEarly: true });
   return registerValidation.validate(user);
