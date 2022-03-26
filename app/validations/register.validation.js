@@ -6,7 +6,6 @@ module.exports = (user) => {
       name: joi.string().required(),
       password: joi.string().required(),
       email: joi.string().email().required(),
-      dob: joi.date().required(),
       mobile_no: joi.number().required(),
     })
     .options({ abortEarly: true });

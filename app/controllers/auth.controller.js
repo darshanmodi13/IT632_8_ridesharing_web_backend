@@ -88,7 +88,7 @@ exports.signin = async (req, res) => {
     let isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return responses.badRequestResponse(res, "Invalid Credentials.");
+      return responses.badRequestResponse(res, {}, "Invalid Credentials.");
     }
     if (!user.is_verified) {
       return responses.badRequestResponse(res, "User is not verified..");
