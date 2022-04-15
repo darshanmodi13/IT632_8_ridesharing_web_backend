@@ -2,6 +2,8 @@ var envirornment = process.env.NODE_ENV || "development";
 if (envirornment === "development") {
   require("dotenv").config();
 }
+//require socket
+require("./socket");
 
 //packages
 const express = require("express");
@@ -10,6 +12,9 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require("body-parser");
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
+const client = require("twilio")(accountSid, authToken);
 
 //swagger
 const swaggerDoc = require("./app/config/swagger.config");
