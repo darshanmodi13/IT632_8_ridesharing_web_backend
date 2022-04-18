@@ -40,6 +40,11 @@ io.on("connection", (socket) => {
       });
     }
   });
+  socket.on("send-passenger-location", (location) => {
+    io.to("ride-select").emit("receive-passenger-location", {
+      ...location,
+    });
+  });
   socket.on("disconnect", () => {
     console.log("disconneted");
   });
