@@ -8,7 +8,7 @@ const controller = require("../controllers/auth.controller");
 
 router.post("/register", /*middleware,*/ controller.register);
 
-router.post("/signin", [auth.isNotLoggedIn], controller.signin);
+router.post("/signin", controller.signin);
 
 router.post("/verify/:mobile_no", controller.verify);
 module.exports = router;

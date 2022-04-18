@@ -1,4 +1,4 @@
-const response = require("../utils/responses");
+  const response = require("../utils/responses");
 
 exports.isLoggedIn = (req, res, next) => {
     try {
