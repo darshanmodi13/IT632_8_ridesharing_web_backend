@@ -1,12 +1,15 @@
-const { boolean } = require("joi");
 const mongoose = require("mongoose");
 
 const document_schema = new mongoose.Schema({
-  driving_licence: {
+  dl_img: {
     type: String,
     required: true,
   },
-  rc_book: {
+  rc_no: {
+    type: String,
+    required: true,
+  },
+  rc_img: {
     type: String,
     required: true,
   },
@@ -14,15 +17,15 @@ const document_schema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  licence_number: {
+  dl_no: {
     type: String,
     required: true,
   },
-  vehicle: {
+  model: {
     type: String,
     require: true,
   },
-  vehicle_no: {
+  reg_no: {
     type: String,
     require: true,
   },

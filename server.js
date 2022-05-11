@@ -15,7 +15,8 @@ const bodyParser = require("body-parser");
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
-
+const cloudinary = require("cloudinary").v2;
+const expressUpload = require("express-fileupload");
 //swagger
 const swaggerDoc = require("./app/config/swagger.config");
 const swaggerUI = require("swagger-ui-express");
@@ -77,9 +78,18 @@ app.use(cookieParser());
 //public folder
 app.use("/public", express.static(path.join(__dirname, "./app/public")));
 
+//cloud store
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+  secure: true,
+});
+
 //swagger
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
-
+//express upload
+app.use(expressUpload());
 //Routes
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
