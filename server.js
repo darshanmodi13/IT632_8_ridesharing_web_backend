@@ -12,11 +12,11 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require("body-parser");
+const cloudinary = require("cloudinary").v2;
+const expressUpload = require("express-fileupload");
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
-const cloudinary = require("cloudinary").v2;
-const expressUpload = require("express-fileupload");
 //swagger
 const swaggerDoc = require("./app/config/swagger.config");
 const swaggerUI = require("swagger-ui-express");
@@ -95,7 +95,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to SE project");
+  res.status(200).send("Welcome to SE project");
 });
 
 const PORT = process.env.PORT || 8080;
@@ -103,3 +103,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Port Listening on ${PORT}`);
 });
+
+module.exports = app;
