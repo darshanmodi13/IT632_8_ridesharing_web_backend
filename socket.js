@@ -8,16 +8,17 @@ io.on("connection", (socket) => {
   console.log(`new connection ${socket.id}`);
   socket.on("join", async (data) => {
     if (data.type && data.type === "driver") {
-      socket.join("ahmedabad");
+      socket.join(data.city);
       socket.emit("res", { res: "successfully joined." });
     } else {
-      socket.join("ride-select");
+      console.log(data.id);
+      socket.join(data.id);
     }
   });
   socket.on("find-ride", async (data) => {
     // console.log(data);
-    let res = await socket.in("ahmedabad").fetchSockets();
-    if (res.length !== 0) socket.to("ahmedabad").emit("select-ride", data);
+    let res = await socket.in(data.city).fetchSockets();
+    if (res.length !== 0) socket.to(data.city).emit("select-ride", data);
     else
       io.to(socket.id).emit("no-ride", {
         msg: "no ride available.",
@@ -26,12 +27,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("ride-selected", async (data) => {
-    let res = await socket.in("ride-select").fetchSockets();
+    let res = await socket.in(data.user_id).fetchSockets();
     if (res.length < 2) {
-      socket.join("ride-select");
-      socket.leave("ahmedabad");
-      io.to("ride-select").emit("driver-selected", { ...data, status: "200" });
-      io.to("ahmedabad").emit("ride-cancelled", {
+      socket.join(data.user_id);
+      socket.leave(data.location.split(",")[0]);
+      io.to(data.user_id).emit("driver-selected", { ...data, status: "200" });
+      io.to(data.location.split(",")[0]).emit("ride-cancelled", {
         msg: "can not able to select ride.",
       });
     } else {
@@ -41,9 +42,13 @@ io.on("connection", (socket) => {
     }
   });
   socket.on("send-passenger-location", (location) => {
-    io.to("ride-select").emit("receive-passenger-location", {
+    io.to(location.id).emit("receive-passenger-location", {
       ...location,
     });
+  });
+  socket.on("end-ride", async (data) => {
+    console.log(data);
+    io.to(data.id).emit("ride-ended", { ...data });
   });
   socket.on("disconnect", () => {
     console.log("disconneted");

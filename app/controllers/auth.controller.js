@@ -14,8 +14,11 @@ const validate_user = require("../validations/register.validation");
 
 exports.register = async (req, res) => {
   try {
+    // console.log(req.body);
     let validate = await validate_user(req.body);
+    // console.log(validate.error);
     if (validate.error) {
+      // console.log("validate called.");
       return responses.badRequestResponse(
         res,
         validate.error.details[0].message
@@ -34,6 +37,7 @@ exports.register = async (req, res) => {
     });
 
     if (user) {
+      // console.log("user called.");
       return responses.badRequestResponse(
         res,
         {},

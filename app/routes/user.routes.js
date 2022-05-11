@@ -9,6 +9,6 @@ router.get("/get/:id", controller.getUser);
 
 router.put("/update/:id", controller.updateUser);
 
-router.post("/documents/:id", controller.uploadDocs);
+router.post("/upload-docs/:id", controller.uploadDocs);
 
 module.exports = router;
