@@ -94,7 +94,7 @@ exports.signin = async (req, res) => {
     if (!isMatch) {
       return responses.badRequestResponse(res, {}, "Invalid Credentials.");
     }
-    if (!user.is_verified) {
+    if (!user.is_verified || user.is_deleted) {
       return responses.badRequestResponse(res, "User is not verified..");
     }
 
@@ -133,3 +133,25 @@ exports.verify = async (req, res) => {
     return responses.serverErrorResponse(res);
   }
 };
+
+exports.adminLogin = async (req, res) => {
+  try {
+    const Credentials = {
+      name: "admin",
+      password: "admin",
+    };
+    if (!req.body.name || !req.body.password) {
+      return responses.badRequestResponse(res, {}, "Provide All Credentials..");
+    }
+    if (
+      req.body.name !== Credentials.name ||
+      req.body.password !== Credentials.password
+    ) {
+      return responses.unauthorizedResponse(res);
+    }
+    return responses.successResponse(res, { ...Credentials, token: "1234" });
+  } catch (error) {
+    return responses.serverErrorResponse(res);
+  }
+};
+

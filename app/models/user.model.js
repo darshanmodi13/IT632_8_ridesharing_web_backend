@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  is_deleted: {
+    type: Boolean,
+    default: false,
+  },
+  can_drive: {
+    type: Boolean,
+    default: true,
+  },
   token: {
     type: String,
   },
