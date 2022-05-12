@@ -1,7 +1,7 @@
 //responses
 const responses = require("../utils/responses");
 const cloudinary = require("cloudinary").v2;
-let streamifier = require("streamifier");
+
 //model
 const Rides = require("../models").Rides;
 const User = require("../models").User;
@@ -20,7 +20,36 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {};
+exports.updateUser = async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return responses.badRequestResponse(res, { err: "Provide Params id" });
+    }
+    let user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      return responses.unauthorizedResponse(res);
+    }
+
+    if (
+      !req.body.name ||
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email)
+    ) {
+      return responses.badRequestResponse(
+        res,
+        {},
+        "Provide both name and email"
+      );
+    }
+    user.name = req.body.name;
+    user.email = req.body.email;
+    user.save();
+
+    return responses.successResponse(res, user, "User Updated Successfully..");
+  } catch (error) {
+    console.log(error);
+    return responses.serverErrorResponse(res);
+  }
+};
 
 exports.uploadDocs = async (req, res) => {
   try {
@@ -76,14 +105,48 @@ exports.uploadDocs = async (req, res) => {
 
     let new_doc = await new Documents({
       ...req.body,
-      is_document_verified: true,
+      user_id: req.params.id,
+      is_document_verified: false,
     });
     new_doc.save();
 
-    if (!new_doc) return responses.serverErrorResponse(res);
     return responses.successfullyCreatedResponse(res, new_doc);
-    return res.send("data get successfully..");
   } catch (error) {
+    console.log(error);
+    return responses.serverErrorResponse(res);
+  }
+};
+
+exports.getDocs = async (req, res) => {
+  try {
+    let docs = await Documents.find({ is_document_verified: false }).populate(
+      "user_id"
+    );
+    return responses.successResponse(res, docs);
+  } catch (error) {
+    console.log(error);
+    return responses.serverErrorResponse(res);
+  }
+};
+
+exports.verifyDocs = async (req, res) => {
+  try {
+    await Documents.findByIdAndUpdate(req.params.id, {
+      is_document_verified: true,
+    });
+    return responses.successResponse(res, {});
+  } catch (error) {
+    console.log(error);
+    return responses.serverErrorResponse(res);
+  }
+};
+
+exports.deleteDocs = async (req, res) => {
+  try {
+    await Documents.findByIdAndDelete(req.params.id);
+    return responses.successResponse(res, {});
+  } catch (error) {
+    console.log(error);
     return responses.serverErrorResponse(res);
   }
 };

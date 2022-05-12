@@ -11,4 +11,7 @@ router.post("/register", /*middleware,*/ controller.register);
 router.post("/signin", controller.signin);
 
 router.post("/verify/:mobile_no", controller.verify);
+
+router.post("/admin-login", controller.adminLogin);
+
 module.exports = router;

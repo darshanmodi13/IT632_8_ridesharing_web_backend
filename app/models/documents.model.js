@@ -15,7 +15,7 @@ const document_schema = new mongoose.Schema({
   },
   is_document_verified: {
     type: Boolean,
-    required: true,
+    required: false,
   },
   dl_no: {
     type: String,
@@ -28,6 +28,10 @@ const document_schema = new mongoose.Schema({
   reg_no: {
     type: String,
     require: true,
+  },
+  user_id: {
+    type: mongoose.Types.ObjectId,
+    ref: "users",
   },
 });
 

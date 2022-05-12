@@ -1,17 +1,17 @@
 const { Server } = require("socket.io");
+const Ride = require("./app/models").Rides;
 
 const io = new Server(process.env.PORT || 8081, {
   cors: "*",
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log(`new connection ${socket.id}`);
   socket.on("join", async (data) => {
     if (data.type && data.type === "driver") {
       socket.join(data.city);
       socket.emit("res", { res: "successfully joined." });
     } else {
-      console.log(data.id);
       socket.join(data.id);
     }
   });
@@ -47,30 +47,9 @@ io.on("connection", (socket) => {
     });
   });
   socket.on("end-ride", async (data) => {
-    console.log(data);
     io.to(data.id).emit("ride-ended", { ...data });
   });
   socket.on("disconnect", () => {
     console.log("disconneted");
   });
 });
-
-// const avaliable_offers = [
-//   {
-//     city: "ahmedabad",
-//     lat: 23.017879,
-//     lng: 72.597008,
-//   },
-//   {
-//     city: "ahmedabad",
-//     lat: 23.017879,
-//     lng: 72.597008,
-//   },
-//   {
-//     city: "ahmedabad",
-//     lat: 23.017879,
-//     lng: 72.597008,
-//   },
-// ];
-
-// const ride_finders = [{}];
