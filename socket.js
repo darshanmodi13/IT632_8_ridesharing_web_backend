@@ -1,7 +1,7 @@
 const { Server } = require("socket.io");
 const Ride = require("./app/models").Rides;
 
-const io = new Server(process.env.PORT || 8081, {
+const io = new Server(30000, {
   cors: "*",
 });
 
