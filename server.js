@@ -30,7 +30,7 @@ const app = express();
 //Server
 const server = http.createServer(app);
 //require socket
-const io = socket(server);
+const io = socket(server, { cors: "*" });
 
 //Database Connection
 mongoose
@@ -47,7 +47,8 @@ mongoose
 
 //Configs
 var corsOptions = {
-  origin: "https://tangerine-boba-abe4af.netlify.app",
+  // origin: "https://tangerine-boba-abe4af.netlify.app",
+  origin: "http://localhost:3000",
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -56,10 +57,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(function (req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://tangerine-boba-abe4af.netlify.app"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -162,6 +160,5 @@ io.on("connection", async (socket) => {
     console.log("disconneted");
   });
 });
-
 
 module.exports = app;
