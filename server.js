@@ -13,9 +13,6 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cloudinary = require("cloudinary").v2;
 const expressUpload = require("express-fileupload");
-const accountSid = process.env.ACCOUNT_SID;
-const authToken = process.env.AUTH_TOKEN;
-const client = require("twilio")(accountSid, authToken);
 const socket = require("socket.io");
 //swagger
 const swaggerDoc = require("./app/config/swagger.config");
